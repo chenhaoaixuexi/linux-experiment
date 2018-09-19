@@ -31,7 +31,6 @@ int main(int argc, char *argv[])
 		//      struct dirent *readdir(DIR *dirp);
 		struct	dirent * dire;
 
-
 		if (argc != 1 ) {
 				dir_name = argv[1];
 		}else{
