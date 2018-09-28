@@ -10,7 +10,7 @@
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  YOUR NAME *   Organization:  
+ *         Author:  YOUR NAME *   Organization:
  *
  * =====================================================================================
  */
@@ -31,7 +31,7 @@ int main(int ac , char * av[]){
 		int temp_num;
 
 		if (3 != ac) {
-				printf("input error"); 
+				printf("input error");
 				return -1;
 		}
 

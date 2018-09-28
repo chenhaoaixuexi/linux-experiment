@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  signalControl.c
+ *       Filename:  fork.c
  *
- *    Description:  signal control by function
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  09/20/18 10:26:16
+ *        Created:  09/28/18 13:29:50
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -17,23 +17,14 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
-#include <signal.h>
+#include <sys/types.h>
 #include <unistd.h>
-
-
 int main(){
-
-	void funcCalled(int); // function declare
-	signal(SIGINT,funcCalled); // install the handle
-
-	
-	for(int i = 0; i <5 ; i ++){
-		printf("hello world !\n");
-		sleep(1);
-	}
-}
-
-void funcCalled(int signum){
-		
-	printf("OUCH\n");
+	printf("the parent id is :%d\n",getpid());
+	printf("calling fork\n");
+	sleep(1);
+	//call fork
+	int fork_id = fork();// the child process begin 
+	printf("my id is %d , the fork return value is %d\n",getpid(),fork_id);
+	return 0;
 }

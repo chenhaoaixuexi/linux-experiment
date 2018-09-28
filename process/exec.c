@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  stty.c
+ *       Filename:  exec.c
  *
- *    Description:  practice curses.h
+ *    Description:  study exec function family
  *
  *        Version:  1.0
- *        Created:  09/17/18 20:54:49
+ *        Created:  09/28/18 19:08:49
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,7 +16,7 @@
  * =====================================================================================
  */
 #include <stdlib.h>
-#include<curses.h>
-main(){
-	int i;
+#include <unistd.h>
+int main(){
+	execl("/bin/ls","ls","-al","./",NULL);
 }

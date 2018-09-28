@@ -5,8 +5,8 @@
  *
  *    Description:  simulate cmd ls -l
  *
- *    algorithm : 
- *    	# 
+ *    algorithm :
+ *    	#
  *
  *        Version:  1.0
  *        Created:  09/10/18 21:30:31
@@ -16,7 +16,7 @@
  *       		opendir
  *       		readdir
  *       		closedir
- *		   Organization:  
+ *		   Organization:
  *
  * =====================================================================================
  */
