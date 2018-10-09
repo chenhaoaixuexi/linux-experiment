@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <fcntl.h>
+#include <unistd.h>
 
 void handle_404(int fd){
 	write(fd, "HTTP/1.1 404 Not Found\r\nContent-Type: text/html; charset=iso-8859-1\r\n\r\n", strlen("HTTP/1.1 404 Not Found\r\nContent-Type: text/html; charset=iso-8859-1\r\n\r\n"));
@@ -33,14 +34,15 @@ void handle_200(int fd, char *file_name){
 void handle_request(int fd, char *request){
 	char cmd[1024];
 	char file_name[1024];
-	sscanf(request, "%s%s", cmd, file_name);
+	char temp[1024];
+	sscanf(request, "%s%s%s", cmd, file_name,temp);
 	if(strcmp(cmd, "GET")==0)
 		handle_200(fd, file_name);
 	else
 		handle_400(fd);	
 }
 
-main(int ac, char *av[]){
+int main(int ac, char *av[]){
 	int tcp_socket;
 	struct sockaddr_in addr;
 	int fd;

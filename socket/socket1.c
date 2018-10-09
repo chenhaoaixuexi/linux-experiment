@@ -1,4 +1,4 @@
-/let*
+/*
  * ====================================================================================
  *
  *
@@ -17,15 +17,11 @@
 #include <stdio.h>
 #include <sys/socket.h>
 #include <sys/types.h>
-#include <unistd.h>
 #include <string.h>
 #include <arpa/inet.h>
-#include <signal.h>
-#define PORT 9998
+#define PORT 9999
 
 struct sockaddr_in  addr;
-int lock = 1;
-int count= 100;
 /** int getSocket(); */
 /** int bindSocket(int ); */
 /** int myListenAccept(int,int); */
@@ -64,46 +60,20 @@ int myListenAccept(int socket, int limit){
 	}
 	return fd;
 }
-
-int operator (int fd){
+int fileOperator (int fd){
 	FILE *  fp = fdopen(fd,"w");	
 	if (NULL == fp){
 		perror("open fail");	
 		return -1 ;
 	}
-	count --;
-	fprintf(fp , "the count: %d",count);
-	fprintf(fp,"this is  OK\n");
-	return 0 ;
-}
-void  func(int signum){
-	printf("handle signal : %d",signum);
-	exit(0);
+	fprintf(fp , "sucessfully fuck\n");
+
 }
 int main(){
 	int socketID = getSocket();
 	int result = bindSocket(socketID); 
-	signal(SIGINT,SIG_DFL);
-	if(listen(socketID,1) == -1){
-		perror("listen fail");
-		return -1;
-	}
-	//int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
-	while(1){
-		//int fd = accept(socket,( struct sockaddr *)&addr,sizeof(addr));
-		int fd = accept(socketID,NULL,NULL);
-		if (-1 == fd){
-			perror("accept fail");
-			return -1;
-		}
-		int forkID = fork();
-		if(0 == forkID){ 
-			operator(fd);
-			return 0;
-		}else{
-			continue;
-		}
-	}
-	return 0; 
+	int fd = myListenAccept(socketID,1);
+	fileOperator(fd);
+	return 0;
 
 }
