@@ -15,7 +15,7 @@ void *print_msg(void *msg){
 	}
 }
 
-main(){
+int main(){
 	pthread_t t1, t2;
 	pthread_create(&t1, NULL, print_msg, "Shenyangnan");
 	pthread_create(&t2, NULL, print_msg, "Shenyang");
