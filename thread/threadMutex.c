@@ -41,6 +41,7 @@ void * show(void * a){
 
 			printf("%s",(char *)a);
 			printf("%d : %d\n",(int)pthread_self(),count --);
+			fflush(stdout);
 		}
 		pthread_mutex_unlock(&mutex);
 	}

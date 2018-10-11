@@ -1,0 +1,3 @@
+ipcrm -m  : delete share memory
+ipcs |grep 63 : look
+

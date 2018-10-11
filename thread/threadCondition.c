@@ -38,28 +38,43 @@ pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
 
 // operator the public variable
-void * show(void * a){
-	pthread_mutex_lock(&mutex);
-	while(count >0 ){
-		if (100 != count){
+void * show1(void * a){
+	while(1){
+		pthread_mutex_lock(&mutex);
+		if (count == 100){
 			pthread_cond_wait(&cond,&mutex);
 		}
 		printf("%d : %d\n",(int)pthread_self(),count --);
-		pthread_mutex_unlock(&mutex);
 		pthread_cond_signal(&cond);
 		sleep(1);
+		pthread_mutex_unlock(&mutex);
+
 	}	
 }
 
+// operator the public variable
+void * show2(void * a){
+	while(1){
+		pthread_mutex_lock(&mutex);
+		if (count != 100){
+			pthread_cond_wait(&cond,&mutex);
+		}
+		printf("%d : %d\n",(int)pthread_self(),count ++);
+		pthread_cond_signal(&cond);
+		sleep(1);
+		pthread_mutex_unlock(&mutex);
+	}	
+}
 
 int main()
 {
-	void * show(void *);
-
+	
+	void * show1(void * a);
+	void * show2(void * a);
 	pthread_t t1;
 	pthread_t t2;
-	pthread_create(&t1,NULL,show,NULL);
-	pthread_create(&t2,NULL,show,NULL);
+	pthread_create(&t1,NULL,show1,NULL);
+	pthread_create(&t2,NULL,show2,NULL);
 	pthread_join(t1,NULL);
 	pthread_join(t2,NULL);
 	return 0;

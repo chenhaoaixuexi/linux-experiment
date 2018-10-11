@@ -1,0 +1,4 @@
+rm tube
+mkfifo tube
+ls > tube
+cat tube
