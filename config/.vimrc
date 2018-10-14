@@ -1,16 +1,16 @@
 "============================================================|fold |====================================================
 set foldmethod=marker "set default foldmethod
 
-""=====================================================| highlight search|====================================================
-"" 当光标一段时间保持不动了，就禁用高亮
-"autocmd cursorhold * set nohlsearch
-"" 当输入查找命令时，再启用高亮
-"noremap n :set hlsearch<cr>n
-"noremap N :set hlsearch<cr>N
-"noremap / :set hlsearch<cr>/
-"noremap ? :set hlsearch<cr>?
-"noremap * *:set hlsearch<cr>
-"noremap # #:set hlsearch<cr>
+"=====================================================| highlight search|====================================================
+" 当光标一段时间保持不动了，就禁用高亮
+autocmd cursorhold * set nohlsearch
+" 当输入查找命令时，再启用高亮
+noremap n :set hlsearch<cr>n
+noremap N :set hlsearch<cr>N
+noremap / :set hlsearch<cr>/
+noremap ? :set hlsearch<cr>?
+noremap * *:set hlsearch<cr>
+noremap # #:set hlsearch<cr>
 set ic
 
 ""====================================================|indent config |====================================================
@@ -20,21 +20,36 @@ set cindent                "自动缩进,以c语言风格，例如从if进入下
 set smartindent            "改进版的cindent,自动识别以#开头的注释，不进行换行 
 set autoindent              "autoindent配合下面一条命令根据不同语言类型进行不同的缩进操作，更加智能 
 
+"====================================================| man help |====================================================
 "" 查看方法输入:Man api_name
 source $VIMRUNTIME/ftplugin/man.vim
 "" 映射之后就可以少按一下 Shift 键。
 "cmap man Man
 "" 在普通模式下按下 K （大写）即可启动 man 查看光标下的函数。
-nmap K :Man <cword><CR>
+nmap K :Man 3 <cword><CR>
 
+set relativenumber
 map <C-q> :shell<CR>
 set guifont=YaHei\ Consolas\ Hybrid\ 11.5
+"====================================================| paste|====================================================
 set pastetoggle=<F11>
-set relativenumber
-let mapleader=";"
+map <Leader>c "+y
+map <Leader>v "+p
+"====================================================| leader  map |====================================================
+let mapleader="\<space>"
+map <leader>s <esc>:w<cr>
+map <leader>w <esc>:wq<cr>
+map <leader>q <esc>:wqa!<cr>
+map <leader>d <esc>yyp
 
-" Move to word
-nmap  f  <Plug>(easymotion-bd-w)
+
+"win move 
+nmap  -  <Plug>(choosewin)
+" if you want to use overlay feature
+let g:choosewin_overlay_enable = 1
+
+
+
 " 随 vim 自启动
 "let g:indent_guides_enable_on_vim_startup=1
 " 从第二层开始可视化显示缩进
@@ -72,7 +87,6 @@ syntax enable
 set background=dark
 set encoding=utf-8	"使用utf-8编码
 set showcmd "显示输入命令
-"set clipboard=unnamed,unnamedplus    "可以从vim复制到剪贴版中
 "set paste
 set mouse=a "可以在buffer的任何地方使用鼠标
 
@@ -169,6 +183,16 @@ call vundle#begin()
 "call vundle#begin('~/some/path/here')
 
 " 让vundle管理插件版本,必须
+"====================================================|translate |====================================================
+Plugin 'ianva/vim-youdao-translater'
+vnoremap <silent> yd :<C-u>Ydv<CR>
+nnoremap <silent> yd :<C-u>Ydc<CR>
+noremap <leader>yd :<C-u>Yde<CR>
+
+Plugin 't9md/vim-choosewin'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'raingo/vim-matlab'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'shougo/neocomplete.vim'
 Plugin 'shougo/neosnippet-snippets'
@@ -193,7 +217,6 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'raimondi/delimitmate'
 "Plugin 'townk/vim-autoclose'
 Plugin 'scrooloose/nerdtree'
-Plugin 'tpope/vim-fugitive'
 Plugin 'L9'
 Plugin 'c.vim'
 Plugin 'mizuchi/stl-syntax'
@@ -203,7 +226,10 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'tomasr/molokai'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+"====================================================| motion |====================================================
 Plugin 'easymotion/vim-easymotion'
+map <Leader>f <Plug>(easymotion-overwin-f2)
+
 Plugin 'mattn/emmet-vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'groenewege/vim-less'
