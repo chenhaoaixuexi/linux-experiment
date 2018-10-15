@@ -1,8 +1,10 @@
 set_color purple
 set fish_greeting 'Talk is cheap. Show me the code.'
 set linux_c ~/linux_c
-set es es.exe
-
+set fish ~/.config/fish/config.fish
+set vim ~/.vimrc
+alias cman 'man -M /usr/share/man/zh_CN' 
+alias cao fuck
 function cdc
 	cd /mnt/c/
 end
@@ -12,14 +14,6 @@ end
 function cdf
 	cd /mnt/f/
 end
-function cman
-	 man 
-end
-
-function kao
-	fuck
-end
-
 
 thefuck --alias | source
 
@@ -27,5 +21,8 @@ function pl
 	ps -l 
 end
 
+function man
+  /usr/bin/man $argv | col -b | /usr/bin/vim -R -c 'set ft=man nomod nolist' -
+end
 
 

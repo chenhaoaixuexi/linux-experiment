@@ -1,4 +1,4 @@
-/*{{{
+/*
  * =====================================================================================
  *
  *       Filename:  signalSay.c
@@ -14,7 +14,7 @@
  *   Organization:  
  *
  * =====================================================================================
- *//*}}}*/
+ */
 #include <stdlib.h>
 #include <signal.h>
 #include<unistd.h>
@@ -34,13 +34,13 @@ void stop(int signum)
 int main(){
 	int p1,p2;
 	//void (*signal(int sig, void (*func)(int)))(int);
-	signal(SIGINT,stop);
 	while(-1 == (p1=fork()));// create child process UNTILL ok
 	if (p1 > 0)// in parent
 	{//mark 1
 		while(-1 == (p2 = fork()));// create child process UNTILL ok
 		if (p2>0)  // in parent
 		{// mark 2
+			signal(SIGINT,stop);
 			// lock UNITLL wait_mark = 0
 			wait_mark = 1;
 			waiting();

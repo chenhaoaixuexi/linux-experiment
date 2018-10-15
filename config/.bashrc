@@ -122,10 +122,9 @@ alias cdf='cd /mnt/f/'
 alias cde='cd /mnt/e/'
 alias cman='man -M /usr/share/man/zh_CN' 
 alias cls='clear'
-alias cdz='cd /mnt/d/桌面/'
-alias gc='git clone'
-eval $(thefuck --alias)
 alias cm='cppman'
+alias in='sudo screen -r'
+alias s='sudo screen'
 
 command_not_found_handle() {
     if cmd.exe /c "(where $1 || (help $1 |findstr /V Try)) >nul 2>nul && ($* || exit 0)"; then
@@ -160,3 +159,14 @@ export LESS_TERMCAP_us=$'\E[01;33m'
 
 PS1="\[\e[37;40m\][\[\e[32;40m\]\u\[\e[37;40m\]@\h\[\e[35;40m\]\W\[\e[0m\]]\\$ "
 export PROMPT_COMMAND='{ msg=$(history 1 | { read x y; echo $y; });user=$(whoami); echo $(date "+%Y-%m-%d %H:%M:%S"):$user:`pwd`/:$msg ---- $(who am i); } >> /tmp/`hostname`.`whoami`.history-timestamp'
+
+
+
+
+# variable 
+fish=~/.config/fish/config.fish
+vim=~/.vimrc
+#my function
+function man() {
+  /usr/bin/man $* | col -b | /usr/bin/vim -R -c 'set ft=man nomod nolist' -
+}

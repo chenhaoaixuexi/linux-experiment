@@ -1,3 +1,4 @@
+
 "============================================================|fold |====================================================
 set foldmethod=marker "set default foldmethod
 
@@ -29,24 +30,24 @@ source $VIMRUNTIME/ftplugin/man.vim
 nmap K :Man 3 <cword><CR>
 
 set relativenumber
-map <C-q> :shell<CR>
+map <C-q> :<esc>!shell<CR>
 set guifont=YaHei\ Consolas\ Hybrid\ 11.5
 "====================================================| paste|====================================================
 set pastetoggle=<F11>
-map <Leader>c "+y
-map <Leader>v "+p
 "====================================================| leader  map |====================================================
-let mapleader="\<space>"
+let mapleader="\\"
 map <leader>s <esc>:w<cr>
 map <leader>w <esc>:wq<cr>
 map <leader>q <esc>:wqa!<cr>
 map <leader>d <esc>yyp
+map <leader><space> gg=G``zz 
 
 
 "win move 
 nmap  -  <Plug>(choosewin)
 " if you want to use overlay feature
 let g:choosewin_overlay_enable = 1
+map <leader>x <C-w>q
 
 
 
@@ -138,12 +139,6 @@ let Tlist_Ctags_Cmd="/usr/bin/ctags" "将taglist与ctags关联
 let Tlist_GainFocus_On_ToggleOpen=1     "auto focus on toogleOpen
 "let Tlist_Process_File_Always=1
 
-
-
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 " 设置错误符号
@@ -155,25 +150,7 @@ let g:syntastic_check_on_open=0
 " 是否在保存文件后检查
 let g:syntastic_check_on_wq=1
 
-
-
-
-
-
 set conceallevel=2
-let g:vim_markdown_conceal = 0
-let g:tex_conceal = ""
-let g:vim_markdown_math = 1
-let g:vim_markdown_fenced_languages = ['csharp=cs']
-let g:vim_markdown_follow_anchor = 1
-let g:vim_markdown_anchorexpr = "'<<'.v:anchor.'>>'"
-let g:vim_markdown_math = 1
-
-
-
-
-
-
 
 filetype off                  " 必须要添加
 " 设置包括vundle和初始化相关的runtime path
@@ -208,9 +185,8 @@ Plugin 'tpope/vim-commentary'
 Plugin 'enricobacis/vim-airline-clock'
 Plugin 'scrooloose/syntastic'
 Plugin 'klen/python-mode'
-Plugin 'valloric/youcompleteme'
+"Plugin 'valloric/youcompleteme'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'plasticboy/vim-markdown'
 Plugin 'ervandew/supertab'
 Plugin 'taglist.vim'
 Plugin 'tomtom/tlib_vim'
@@ -243,7 +219,7 @@ let javascript_enable_domhtmlcss = 1
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'marijnh/tern_for_vim'
 "Plugin 'nathanaelkane/vim-indent-guides'
-"" 以下范例用来支持不同格式的插件安装.
+"" 以下范例用来支持不同格式的插件安装.{{{
 "" 请将安装插件的命令放在vundle#begin和vundle#end之间.
 "" Github上的插件
 "" 格式为 Plugin '用户名/插件仓库名'
@@ -261,10 +237,10 @@ Plugin 'marijnh/tern_for_vim'
 "" 安装L9，如果已经安装过这个插件，可利用以下格式避免命名冲突
 "Plugin 'ascenator/L9', {'name': 'newL9'}
 
-" 你的所有插件需要在下面这行之前
+" 你的所有插件需要在下面这行之前}}}
 call vundle#end()            " 必须
 filetype plugin indent on    " 必须 加载vim自带和插件相应的语法和文件类型相关脚本
-" 忽视插件改变缩进,可以使用以下替代:
+" 忽视插件改变缩进,可以使用以下替代:{{{
 "filetype plugin on
 "
 " 常用的命令
@@ -274,7 +250,7 @@ filetype plugin indent on    " 必须 加载vim自带和插件相应的语法和
 " :PluginClean      - 清除未使用插件,需要确认; 追加 `!` 自动批准移除未使用插件
 "
 " 查阅 :h vundle 获取更多细节和wiki以及FAQ
-" 将你自己对非插件片段放在这行之后
+" 将你自己对非插件片段放在这行之后}}}
 nnoremap <F5>   <Esc>:w<CR>:!gcc % -o /tmp/a.out && /tmp/a.out<CR>
 nnoremap <F6>   <Esc>:w<CR>:!gcc % <CR>
 nnoremap <C-F5> <Esc>:w<CR>:!gcc -g % -o /tmp/a.out && gdb /tmp/a.out<CR>
