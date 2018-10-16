@@ -43,14 +43,15 @@ int main(){
 		if (p2>0)  // in parent
 		{// mark 2
 			// lock UNITLL wait_mark = 0
-			wait_mark = 1;
+			wait_mark = 0;
 			waiting();
 			kill(p1,10);
 			kill(p2,12);
-			wait(NULL); 
-			wait(NULL);
+			/** wait(NULL);  */
+			/** wait(NULL); */
 
 			printf("parent process is killed!\n");
+			sleep(100);
 			exit(0);
 		}
 		else

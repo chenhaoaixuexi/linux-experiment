@@ -21,7 +21,7 @@ set cindent                "自动缩进,以c语言风格，例如从if进入下
 set smartindent            "改进版的cindent,自动识别以#开头的注释，不进行换行 
 set autoindent              "autoindent配合下面一条命令根据不同语言类型进行不同的缩进操作，更加智能 
 
-"====================================================| man help |====================================================
+"====================================================| man doc |====================================================
 "" 查看方法输入:Man api_name
 source $VIMRUNTIME/ftplugin/man.vim
 "" 映射之后就可以少按一下 Shift 键。
@@ -32,34 +32,25 @@ nmap K :Man 3 <cword><CR>
 set relativenumber
 map <C-q> :<esc>!shell<CR>
 set guifont=YaHei\ Consolas\ Hybrid\ 11.5
+
 "====================================================| paste|====================================================
 set pastetoggle=<F11>
+
 "====================================================| leader  map |====================================================
 let mapleader="\\"
 map <leader>s <esc>:w<cr>
 map <leader>w <esc>:wq<cr>
 map <leader>q <esc>:wqa!<cr>
+map <leader><esc> <esc>:qa!<cr>
 map <leader>d <esc>yyp
 map <leader><space> gg=G``zz 
 
 
-"win move 
+"====================================================| win move |====================================================
 nmap  -  <Plug>(choosewin)
 " if you want to use overlay feature
 let g:choosewin_overlay_enable = 1
 map <leader>x <C-w>q
-
-
-
-" 随 vim 自启动
-"let g:indent_guides_enable_on_vim_startup=1
-" 从第二层开始可视化显示缩进
-"let g:indent_guides_start_level=2
-" 色块宽度
-"let g:indent_guides_guide_size=0
-" 快捷键 i 开/关缩进可视化
-":nmap <silent> <Leader>i <Plug>IndentGuidesToggle
-
 
 
 set nobackup
@@ -70,16 +61,6 @@ set bufhidden=hide
 set formatoptions=tcrqn
 set autoindent
  
-
-
-
-
-
-
-
-
-
-
 
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 set number
@@ -93,16 +74,12 @@ set mouse=a "可以在buffer的任何地方使用鼠标
 
 set hlsearch "显示高亮搜索
 set ruler                 "显示行号和列号（默认打开) 
-set helplang=cn
 set encoding=utf-8
 
 filetype plugin indent on 
-"set nowrap 
-"==========================设置键盘映射=================================o
-map <Leader>1 :TlistToggle<CR> 
-map <Leader>2 :NERDTreeToggle<CR>
 
-"==========================插件设置=====================================o
+
+"==========================|comment|=====================================o
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 
@@ -132,13 +109,6 @@ let g:NERDToggleCheckAllLines = 1
 
 
 
-let Tlist_Show_One_File=1     "不同时显示多个文件的tag，只显示当前文件的    
-let Tlist_Exit_OnlyWindow=1   "如果taglist窗口是最后一个窗口，则退出vim   
-let Tlist_Ctags_Cmd="/usr/bin/ctags" "将taglist与ctags关联
-"let Tlist_Auto_Open=1        "auto open taglist when open file 
-let Tlist_GainFocus_On_ToggleOpen=1     "auto focus on toogleOpen
-"let Tlist_Process_File_Always=1
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 " 设置错误符号
@@ -159,18 +129,34 @@ call vundle#begin()
 " 另一种选择, 指定一个vundle安装插件的路径
 "call vundle#begin('~/some/path/here')
 
-" 让vundle管理插件版本,必须
+Plugin 'VundleVim/Vundle.vim'
+
 "====================================================|translate |====================================================
 Plugin 'ianva/vim-youdao-translater'
 vnoremap <silent> yd :<C-u>Ydv<CR>
 nnoremap <silent> yd :<C-u>Ydc<CR>
 noremap <leader>yd :<C-u>Yde<CR>
+"====================================================| help doc|====================================================
+Plugin 'asins/vimcdoc'
+" 设定 doc 文档目录
+let helptags=$VIM."/vimfiles/doc"
+set helplang=cn
 
-Plugin 't9md/vim-choosewin'
+"====================================================| chinese input |====================================================
+Plugin 'VimIM'
+let g:vimim_cloud = 'google,sogou,baidu,qq'
+let g:vimim_map = 'tab_as_gi'
+let g:vimim_mode = 'dynamic'
+let g:vimim_mycloud = 0
+let g:vimim_plugin = 'C:/var/mobile/vim/vimfiles/plugin'
+let g:vimim_punctuation = 2
+let g:vimim_shuangpin = 0
+let g:vimim_toggle = 'pinyin,google,sogou'
+
 Plugin 'airblade/vim-gitgutter'
+Plugin 't9md/vim-choosewin'
 Plugin 'tpope/vim-fugitive'
 Plugin 'raingo/vim-matlab'
-Plugin 'VundleVim/Vundle.vim'
 Plugin 'shougo/neocomplete.vim'
 Plugin 'shougo/neosnippet-snippets'
 Plugin 'lokaltog/vim-powerline'
@@ -183,16 +169,43 @@ Plugin 'a.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-commentary'
 Plugin 'enricobacis/vim-airline-clock'
+
+"====================================================|syntastic |====================================================
 Plugin 'scrooloose/syntastic'
+syntax enable
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+" 设置错误符号
+let g:syntastic_error_symbol='✗'
+" 设置警告符号
+let g:syntastic_warning_symbol='!'
+" 是否在打开文件时检查
+let g:syntastic_check_on_open=0
+" 是否在保存文件后检查
+let g:syntastic_check_on_wq=1
+
 Plugin 'klen/python-mode'
-"Plugin 'valloric/youcompleteme'
+Plugin 'valloric/youcompleteme'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'ervandew/supertab'
+
+"====================================================| taglist |====================================================
 Plugin 'taglist.vim'
+map <Leader>1 :TlistToggle<CR> 
+let Tlist_Show_One_File=1     "不同时显示多个文件的tag，只显示当前文件的    
+let Tlist_Exit_OnlyWindow=1   "如果taglist窗口是最后一个窗口，则退出vim   
+let Tlist_Ctags_Cmd="/usr/bin/ctags" "将taglist与ctags关联
+"let Tlist_Auto_Open=1        "auto open taglist when open file 
+let Tlist_GainFocus_On_ToggleOpen=1     "auto focus on toogleOpen
+let Tlist_Process_File_Always=1
+
 Plugin 'tomtom/tlib_vim'
 Plugin 'raimondi/delimitmate'
 "Plugin 'townk/vim-autoclose'
+
+"==========================设置键盘映射=================================o
 Plugin 'scrooloose/nerdtree'
+map <Leader>2 :NERDTreeToggle<CR>
 Plugin 'L9'
 Plugin 'c.vim'
 Plugin 'mizuchi/stl-syntax'

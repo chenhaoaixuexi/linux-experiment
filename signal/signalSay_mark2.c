@@ -51,6 +51,7 @@ int main(){
 			wait(NULL);
 
 			printf("parent process is killed!\n");
+			sleep(100);
 			exit(0);
 		}
 		else

@@ -15,13 +15,12 @@
  *
  * =====================================================================================
  *//*}}}*/
-
-#include <stdlib.h>/*{{{*/
+#include <stdlib.h>
 #include <signal.h>
 #include<unistd.h>
 #include<sys/types.h>
 #include<sys/wait.h>
-#include<stdio.h>/*}}}*/
+#include<stdio.h>
 
 int wait_mark;
 void  waiting()
@@ -45,6 +44,7 @@ int main(){
 			// lock UNITLL wait_mark = 0
 			wait_mark = 1;
 			waiting();
+
 			kill(p1,10);
 			kill(p2,12);
 			wait(NULL); 

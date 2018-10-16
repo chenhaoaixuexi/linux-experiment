@@ -49,7 +49,7 @@ int main(){
 			kill(p2,12);
 			wait(NULL); 
 			wait(NULL);
-
+			sleep(10);
 			printf("parent process is killed!\n");
 			exit(0);
 		}
