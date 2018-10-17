@@ -12,9 +12,13 @@ set vim ~/.vimrc
 alias cman 'man -M /usr/share/man/zh_CN' 
 alias cao fuck
 alias s 'sudo screen'
+alias in 'sudo screen -r'
 
 
 #function
+function tk
+	kill -9 (ps -ef |grep $argv |awk '{print $2}')
+end
 function cdc
 	cd /mnt/c/
 end
@@ -29,10 +33,6 @@ thefuck --alias | source
 
 function pl
 	ps -l 
-end
-
-function man
-  /usr/bin/man $argv | col -b | /usr/bin/vim -R -c 'set ft=man nomod nolist' -
 end
 
 

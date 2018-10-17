@@ -10,8 +10,8 @@ noremap n :set hlsearch<cr>n
 noremap N :set hlsearch<cr>N
 noremap / :set hlsearch<cr>/
 noremap ? :set hlsearch<cr>?
-noremap * *:set hlsearch<cr>
-noremap # #:set hlsearch<cr>
+noremap * *:set hlsearch<cr>*
+noremap # #:set hlsearch<cr>#
 set ic
 
 ""====================================================|indent config |====================================================
@@ -38,12 +38,11 @@ set pastetoggle=<F11>
 
 "====================================================| leader  map |====================================================
 let mapleader="\\"
-map <leader>s <esc>:w<cr>
+map <leader>s <esc>:w<cr>zz
 map <leader>w <esc>:wq<cr>
 map <leader>q <esc>:wqa!<cr>
 map <leader><esc> <esc>:qa!<cr>
-map <leader>d <esc>yyp
-map <leader><space> gg=G``zz 
+map <leader><space> gg=G``zz<esc>:w<cr> 
 
 
 "====================================================| win move |====================================================
@@ -201,7 +200,7 @@ let Tlist_Process_File_Always=1
 
 Plugin 'tomtom/tlib_vim'
 Plugin 'raimondi/delimitmate'
-"Plugin 'townk/vim-autoclose'
+Plugin 'townk/vim-autoclose'
 
 "==========================设置键盘映射=================================o
 Plugin 'scrooloose/nerdtree'
