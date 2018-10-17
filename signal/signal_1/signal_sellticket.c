@@ -1,4 +1,4 @@
-/*
+/*{{{
  * =====================================================================================
  *
  *       Filename:  signal_sellticket.c
@@ -18,14 +18,14 @@
  *   Organization:  
  *
  * =====================================================================================
- */
-#include <stdlib.h>
+ *//*}}}*/
+#include <stdlib.h>/*{{{*/
 #include <stdio.h>
 #include <wait.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <signal.h>
+#include <signal.h>/*}}}*/
 
 int loop_driver = 0;
 int loop_seller = 0;
