@@ -18,6 +18,7 @@
 
 /*{{{*/
 #include <sys/wait.h>
+#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -44,8 +45,12 @@ int main(int argc, char *argv[])
 		msgqid = msgget(MSGKEY, 0777|IPC_CREAT);
 		do 
 		{
-			msgrcv(msgqid,&msg,1024,0,0);
-			printf("(server)received\n");
+			if(-1 == msgrcv(msgqid,&msg,1024,0,0)){
+				continue;
+			}
+			sleep(1);
+			printf("(server)received: ");
+			printf("%s\n",msg.mtext);
 		}while(msg.mtype!=1);
 		msgctl(msgqid,IPC_RMID,0);
 		wait(NULL);
@@ -55,10 +60,12 @@ int main(int argc, char *argv[])
 	{
 		int i;
 		msgqid = msgget(MSGKEY,0777);
-		for(i= 10;i>=1;i++)
+		for(i= 10;i>=1;i--)
 		{
 			msg.mtype = i;
 			printf("(client)sent\n");
+			sleep(1);
+			strcpy(msg.mtext, "client send message");
 			msgsnd(msgqid,&msg,1024,0);
 		}
 		exit(0);
