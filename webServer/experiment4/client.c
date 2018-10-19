@@ -18,9 +18,9 @@
 #include <stdlib.h>
 #include "connect_to_server.h" 
 
-int talk_with_server()
+int talk_with_server(int fd)
 {
-
+	
 }
 
 int main(int ac, char* av[])

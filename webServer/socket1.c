@@ -1,4 +1,4 @@
-/*
+/*{{{
  * =====================================================================================
  *       Filename:  socket.c
  *
@@ -26,6 +26,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <fcntl.h>
+/*}}}*/
 
 int make_server_connect (int port){
 	int state_socket ;
@@ -56,9 +57,11 @@ int make_server_connect (int port){
 		exit(2);
 	}
 }
+
 void MyWait(int signum){
 	while(waitpid(-1,NULL,WNOHANG)>0);
 }
+
 int process (int fd,char * request){
 	int fork_id = fork();
 	char  cmd[1024];
@@ -94,6 +97,8 @@ int process (int fd,char * request){
 	}
 	return 1;
 }
+
+
 int main(int argc, char *argv[])
 {
 	char  request[1024];

@@ -1,12 +1,11 @@
 /*{{{
  * =====================================================================================
+ *       Filename:  socket.c
  *
- *       Filename:  makeSocket.c
- *
- *    Description:  web sockid make
+ *    Description:  web server implement
  *
  *        Version:  1.0
- *        Created:  10/18/18 17:24:39
+ *        Created:  10/08/18 12:08:39
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -14,58 +13,48 @@
  *   Organization:  
  *
  * =====================================================================================
- *//*}}}*/
+ */
 
-#include <stdlib.h>/*{{{*/
-#include <stdio.h>
 #include <netinet/in.h>
-#include <netdb.h>
-#include <sys/types.h>
+#include <netinet/ip.h>
+#include <sys/types.h>   
 #include <sys/socket.h>
-#include <time.h>
-#include <strings.h>
-#include <unistd.h>/*}}}*/
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
+#include <fcntl.h>
+/*}}}*/
 
-#define HOSTLEN 256
-#define BACKLOG 1
+int make_server_socket (int port){
+	int state_socket ;
+	int state_bind;
+	int state_listen;
 
-int make_server_socket_q(int ,int);
+	struct sockaddr_in addr ;
+	int  fd;
 
-int make_server_socket(int portnum)
-{
-	return make_server_socket_q(portnum,BACKLOG);	
+	if (-1 != (state_socket = socket(AF_INET,  SOCK_STREAM,0))){
+		addr.sin_family=AF_INET;
+		addr.sin_port=htons(port);
+		addr.sin_addr.s_addr=INADDR_ANY;
+
+		if(bind(state_socket, (const struct sockaddr *)&addr, sizeof(addr))==-1){
+			perror("cannot bind");
+			exit(1);
+		}else {
+			state_listen = listen(state_socket, 1);
+			if (-1 == state_listen) {
+				perror("cannot listen ")	;
+				exit(3);
+			}
+			return state_socket;
+		}
+	}else {
+		perror("cannot get socket")	;
+		exit(2);
+	}
 }
 
-int make_server_socket_q(int portnum, int backlog)
-{
-	struct sockaddr_in saddr; // build our address here
-	struct hostent *hp; // part of address
-	char hostname[HOSTLEN] ;// address
-	int sock_id;// socket
-
-	sock_id = socket(PF_INET,SOCK_STREAM,0);
-	if(-1 == sock_id)
-		return -1;
-
-	bzero((void *)&saddr,sizeof(saddr));// clear out structure
-
-       /** int gethostname(char *name, size_t namelen); */
-	gethostname(hostname,HOSTLEN);
-
-       /** struct hostent *gethostbyname(const char *name); */
-	hp = gethostbyname(hostname);
-
-       /** void bcopy(const void *src, void *dest, size_t n); */
-	bcopy((void *)hp->h_addr,(void *)&saddr.sin_addr,hp->h_length);
-	saddr.sin_family = AF_INET;
-
-	if (0 != bind(sock_id,(struct sockaddr *)&saddr,sizeof(saddr))) {
-		return -1;
-	}
-
-	if(0 != listen(sock_id,backlog)){
-		return -1;
-	}
-
-	return sock_id;
-}
