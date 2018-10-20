@@ -154,12 +154,13 @@ static int ends_in_cgi(char *f)
 int myprocess(char *rq, int fd)
 {
 	char cmd[BUFSIZ],arg[BUFSIZ];
+	char temp[BUFSIZ];
 
-	if(0 != fork())
+	if(0 != fork())// in parent process
 		return 127;
 
-	strcpy(arg,"/");
-
+	strcpy(arg,"./");
+	// if(2 != sscanf(rq,"%s%s%s",temp,cmd,arg))
 	if(2 != sscanf(rq,"%s%s",cmd,arg+2))
 		return 128;
 

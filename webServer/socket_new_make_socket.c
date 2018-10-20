@@ -28,36 +28,89 @@
 #include <fcntl.h>
 /*}}}*/
 
-int make_server_connect (int port){
-	int state_socket ;
-	int state_bind;
-	int state_listen;
 
-	struct sockaddr_in addr ;
-	int  fd;
+#include <stdlib.h>/*{{{*/
+#include <stdio.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <time.h>
+#include <strings.h>
+#include <unistd.h>/*}}}*/
+#define HOSTLEN 256
+#define BACKLOG 1
 
-	if (-1 != (state_socket = socket(AF_INET,  SOCK_STREAM,0))){
-		addr.sin_family=AF_INET;
-		addr.sin_port=htons(port);
-		addr.sin_addr.s_addr=INADDR_ANY;
+int make_server_socket_q(int ,int);
 
-		if(bind(state_socket, (const struct sockaddr *)&addr, sizeof(addr))==-1){
-			perror("cannot bind");
-			exit(1);
-		}else {
-			state_listen = listen(state_socket, 1);
-			if (-1 == state_listen) {
-				perror("cannot listen ")	;
-				exit(3);
-			}
-			return state_socket;
-		}
-	}else {
-		perror("cannot get socket")	;
-		exit(2);
-	}
+int make_server_connect(int portnum)
+{
+	return make_server_socket_q(portnum,BACKLOG);	
 }
 
+int make_server_socket_q(int portnum, int backlog)
+{
+	struct sockaddr_in saddr; // build our address here
+	struct hostent *hp; // part of address
+	char hostname[HOSTLEN] ;// address
+	int sock_id;// socket
+
+	sock_id = socket(AF_INET,SOCK_STREAM,0);
+	if(-1 == sock_id)
+		return -1;
+
+	bzero((void *)&saddr,sizeof(saddr));// clear out structure
+
+	/** int gethostname(char *name, size_t namelen); */
+	gethostname(hostname,HOSTLEN);
+
+	/** struct hostent *gethostbyname(const char *name); */
+	hp = gethostbyname(hostname);
+
+	/** void bcopy(const void *src, void *dest, size_t n); */
+	bcopy((void *)hp->h_addr,(void *)&saddr.sin_addr,hp->h_length);
+	saddr.sin_family = AF_INET;
+
+	if (0 != bind(sock_id,(struct sockaddr *)&saddr,sizeof(saddr))) {
+		return -1;
+	}
+
+	if(0 != listen(sock_id,backlog)){
+		return -1;
+	}
+
+	return sock_id;
+}
+/** int make_server_connect (int port){ */
+/**     int state_socket ; */
+/**     int state_bind; */
+/**     int state_listen; */
+/**  */
+/**     struct sockaddr_in addr ; */
+/**     int  fd; */
+/**  */
+/**     if (-1 != (state_socket = socket(AF_INET,  SOCK_STREAM,0))){ */
+/**         addr.sin_family=AF_INET; */
+/**         addr.sin_port=htons(port); */
+/**         addr.sin_addr.s_addr=INADDR_ANY; */
+/**  */
+/**         if(bind(state_socket, (const struct sockaddr *)&addr, sizeof(addr))==-1){ */
+/**             perror("cannot bind"); */
+/**             exit(1); */
+/**         }else { */
+/**             state_listen = listen(state_socket, 1); */
+/**             if (-1 == state_listen) { */
+/**                 perror("cannot listen ")	; */
+/**                 exit(3); */
+/**             } */
+/**             return state_socket; */
+/**         } */
+/**     }else { */
+/**         perror("cannot get socket")	; */
+/**         exit(2); */
+/**     } */
+/** } */
+/**  */
 void MyWait(int signum){
 	while(waitpid(-1,NULL,WNOHANG)>0);
 }

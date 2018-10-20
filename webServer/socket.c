@@ -1,4 +1,4 @@
-/*
+/*{{{
  * =====================================================================================
  *       Filename:  socket.c
  *
@@ -26,6 +26,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <fcntl.h>
+/*}}}*/
 
 int make_server_connect (int port){
 	int state_socket ;
@@ -56,43 +57,57 @@ int make_server_connect (int port){
 		exit(2);
 	}
 }
+
 void MyWait(int signum){
 	while(waitpid(-1,NULL,WNOHANG)>0);
 }
+
 int process (int fd,char * request){
+	int fork_id = fork();
 	char  cmd[1024];
 	char  file_name[1024];
 	char temp[1024];
 	int ffd;
 	int n;
 	char buf[1024];
-	sscanf(request,"%s%s%s",cmd,file_name,temp);
-	if(strcmp(cmd,"GET")== 0){
-		if((ffd=open(file_name+1, O_RDONLY))==-1){
-			//handle_404(fd);
-			printf("404");
-			write(fd, "HTTP/1.1 404 Not Found\r\nContent-Type: text/html; charset=iso-8859-1\r\n\r\n", strlen("HTTP/1.1 404 Not Found\r\nContent-Type: text/html; charset=iso-8859-1\r\n\r\n"));
-			return 0;
-		}
-		printf("200");
-		write(fd, "HTTP/1.0 200 OK\r\n\r\n", strlen("HTTP/1.0 200 OK\r\n\r\n"));
-		while((n=read(ffd, buf, sizeof(buf)))>0){
-				write(fd, buf, n);
+	switch (fork_id){
+		case 0:
+			sscanf(request,"%s%s%s",cmd,file_name,temp);
+
+			if(strcmp(cmd,"GET")== 0){
+				if((ffd=open(file_name+1, O_RDONLY))==-1){
+					//handle_404(fd);
+					printf("404");
+					write(fd, "HTTP/1.1 404 Not Found\r\nContent-Type: text/html; charset=iso-8859-1\r\n\r\n", strlen("HTTP/1.1 404 Not Found\r\nContent-Type: text/html; charset=iso-8859-1\r\n\r\n"));
+					return 0;
+				}
+				printf("200");
+				write(fd, "HTTP/1.0 200 OK\r\n\r\n", strlen("HTTP/1.0 200 OK\r\n\r\n"));
+				while((n=read(ffd, buf, sizeof(buf)))>0){
+						write(fd, buf, n);
+					}
+				close(ffd);
+			}else{
+				printf("400");
+				write(fd, "HTTP/1.1 400 Operator Not Found\r\nContent-Type: text/html; charset=iso-8859-1\r\n\r\n", strlen("HTTP/1.1 400 Operaor Not Found\r\nContent-Type: text/html; charset=iso-8859-1\r\n\r\n"));
 			}
-		close(ffd);
-	}else{
-		printf("400");
-		write(fd, "HTTP/1.1 400 Operator Not Found\r\nContent-Type: text/html; charset=iso-8859-1\r\n\r\n", strlen("HTTP/1.1 400 Operaor Not Found\r\nContent-Type: text/html; charset=iso-8859-1\r\n\r\n"));
+			break;
+		default:
+			break;
 	}
 	return 1;
 }
+
+
 int main(int argc, char *argv[])
 {
 	char  request[1024];
 	int interrupt = 1;	
 	int fd;
+	int port = atoi(argv[1]);
+
 	signal (SIGCHLD,MyWait);
-	int socket = make_server_connect(9999);
+	int socket = make_server_connect(port);
 	if (-1 == socket) {
 		perror("make server connect fail")	;
 		exit(4);
