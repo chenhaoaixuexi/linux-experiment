@@ -39,7 +39,6 @@
 #define ball  "o"
 
 
-
 int initiate()	;
 int paint(char *);
 int setDelay(int);

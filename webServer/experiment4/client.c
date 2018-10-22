@@ -20,13 +20,13 @@
 
 int talk_with_server(int fd)
 {
-	
+
 }
 
 int main(int ac, char* av[])
 {
 	char * host = av[1];
-       /** int atoi(const char *nptr); */
+	/** int atoi(const char *nptr); */
 	int port = atoi(av[2]) ;
 	int fd ;
 	fd = connect_to_server(host,port);
