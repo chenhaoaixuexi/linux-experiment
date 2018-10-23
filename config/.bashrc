@@ -116,15 +116,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-alias cdc='cd /mnt/c/'
-alias cdd='cd /mnt/d/'
-alias cdf='cd /mnt/f/'
-alias cde='cd /mnt/e/'
-alias cman='man -M /usr/share/man/zh_CN' 
-alias cls='clear'
-alias cm='cppman'
-alias in='sudo screen -r'
-alias s='sudo screen'
 
 command_not_found_handle() {
     if cmd.exe /c "(where $1 || (help $1 |findstr /V Try)) >nul 2>nul && ($* || exit 0)"; then
@@ -166,7 +157,19 @@ export PROMPT_COMMAND='{ msg=$(history 1 | { read x y; echo $y; });user=$(whoami
 # variable 
 fish=~/.config/fish/config.fish
 vim=~/.vimrc
+#my alias
+alias cdc='cd /mnt/c/'
+alias cdd='cd /mnt/d/'
+alias cdf='cd /mnt/f/'
+alias cde='cd /mnt/e/'
+alias cman='man -M /usr/share/man/zh_CN' 
+alias cls='clear'
+alias cm='cppman'
+alias in='sudo screen -r'
+alias s='sudo screen'
+# alias tk='kill -9 `ps -ef |grep xxx|awk \'{print $2}\'`'
+alias tk='kill -9 `ps -ef |grep xxx|awk '{print $2}'`'
 #my function
-function man() {
-  /usr/bin/man $* | col -b | /usr/bin/vim -R -c 'set ft=man nomod nolist' -
+function vman() {
+ /usr/bin/man $* | col -b | /usr/bin/vim -R -c 'set ft=man nomod nolist' -
 }

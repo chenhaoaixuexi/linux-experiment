@@ -135,7 +135,7 @@ static void * draw_line_v(void * input)
 		pthread_create(&t[i],NULL,initinate_vline,&line);
 		// pthread_create(&t[i],NULL,show,NULL);
 	}
-	while(1);
+	sleep(100);
 	for(i = 0;i<7;++i)
 	{
 		pthread_join(t[i],NULL);

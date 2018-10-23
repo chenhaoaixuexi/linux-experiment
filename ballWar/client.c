@@ -35,8 +35,7 @@ int main(int ac, int av)
 	pthread_create(&t1,NULL,draw_line_v,NULL);
 	/** [> int pthread_join(pthread_t thread, void **retval); <] */
 	pthread_join(t1,NULL);
-	while(1);
-	curs_set(1);
 	endwin();
+	curs_set(1);
 
 }

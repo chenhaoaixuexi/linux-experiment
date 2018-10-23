@@ -1,4 +1,3 @@
-
 "============================================================|fold |====================================================
 set foldmethod=marker "set default foldmethod
 
@@ -28,6 +27,10 @@ source $VIMRUNTIME/ftplugin/man.vim
 "cmap man Man
 "" 在普通模式下按下 K （大写）即可启动 man 查看光标下的函数。
 nmap K :Man 3 <cword><CR>
+nmap <space>K :Man 
+
+
+
 
 set relativenumber
 map <C-q> :<esc>!shell<CR>
@@ -38,18 +41,25 @@ set pastetoggle=<F11>
 
 "====================================================| leader  map |====================================================
 let mapleader="\\"
-map <leader>s <esc>:w<cr>zz
-map <leader>w <esc>:wq<cr>
+
+map <leader>s <esc>:wa!<cr>zz
+map <leader>w <esc>:wq!<cr>
 map <leader>q <esc>:wqa!<cr>
 map <leader><esc> <esc>:qa!<cr>
-map <leader><space> gg=G``zz<esc>:w<cr> 
-
+map <space><space> gg=G``zz<esc>:wa!<cr> 
+map <space>o o<esc>
+map <space>s <esc>:wa!<cr>zz
+map <space>w <esc>:wq!<cr>
+map <space>q <esc>:wqa!<cr>
+map <space>v <esc>:reg<cr>
 
 "====================================================| win move |====================================================
 nmap  -  <Plug>(choosewin)
 " if you want to use overlay feature
 let g:choosewin_overlay_enable = 1
-map <leader>x <C-w>q
+map <space>x <C-w>q
+map <space>= <C-w>w
+map <space><tab> gt
 
 
 set nobackup
@@ -59,7 +69,7 @@ set bufhidden=hide
 "自动格式化
 set formatoptions=tcrqn
 set autoindent
- 
+
 
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 set number
@@ -134,7 +144,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'ianva/vim-youdao-translater'
 vnoremap <silent> yd :<C-u>Ydv<CR>
 nnoremap <silent> yd :<C-u>Ydc<CR>
-noremap <leader>yd :<C-u>Yde<CR>
+noremap <space>yd :<C-u>Yde<CR>
 "====================================================| help doc|====================================================
 Plugin 'asins/vimcdoc'
 " 设定 doc 文档目录
@@ -182,6 +192,43 @@ let g:syntastic_warning_symbol='!'
 let g:syntastic_check_on_open=0
 " 是否在保存文件后检查
 let g:syntastic_check_on_wq=1
+" Plugin 'w0rp/ale'
+" " In ~/.vim/ftplugin/javascript.vim, or somewhere similar.
+" " Fix files with prettier, and then ESLint.
+" let b:ale_fixers = ['prettier', 'eslint']
+" " Equivalent to the above.
+" let b:ale_fixers = {'javascript': ['prettier', 'eslint']}
+" " In ~/.vim/vimrc, or somewhere similar.
+" let g:ale_fixers = {
+" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+" \   'javascript': ['eslint'],
+" \}
+" " Set this variable to 1 to fix files when you save them.
+" let g:ale_fix_on_save = 1
+" " Enable completion where available.
+" " This setting must be set before ALE is loaded.
+" let g:ale_completion_enabled = 1
+" let g:ale_sign_error = 'x'
+" let g:ale_sign_warning = '!'
+" " Set this. Airline will handle the rest.
+" let g:airline#extensions#ale#enabled = 1
+" function! LinterStatus() abort
+"     let l:counts = ale#statusline#Count(bufnr(''))
+"
+"     let l:all_errors = l:counts.error + l:counts.style_error
+"     let l:all_non_errors = l:counts.total - l:all_errors
+"
+"     return l:counts.total == 0 ? 'OK' : printf(
+"     \   '%dW %dE',
+"     \   all_non_errors,
+"     \   all_errors
+"     \)
+" endfunction
+"
+" set statusline=%{LinterStatus()}
+" " Show 5 lines of errors (default: 10)
+" let g:ale_list_window_size = 3
+
 
 Plugin 'klen/python-mode'
 Plugin 'valloric/youcompleteme'
@@ -190,7 +237,7 @@ Plugin 'ervandew/supertab'
 
 "====================================================| taglist |====================================================
 Plugin 'taglist.vim'
-map <Leader>1 :TlistToggle<CR> 
+map <space>1 :TlistToggle<CR> 
 let Tlist_Show_One_File=1     "不同时显示多个文件的tag，只显示当前文件的    
 let Tlist_Exit_OnlyWindow=1   "如果taglist窗口是最后一个窗口，则退出vim   
 let Tlist_Ctags_Cmd="/usr/bin/ctags" "将taglist与ctags关联
@@ -204,7 +251,7 @@ Plugin 'townk/vim-autoclose'
 
 "==========================设置键盘映射=================================o
 Plugin 'scrooloose/nerdtree'
-map <Leader>2 :NERDTreeToggle<CR>
+map <space>2 :NERDTreeToggle<CR>
 Plugin 'L9'
 Plugin 'c.vim'
 Plugin 'mizuchi/stl-syntax'
@@ -216,16 +263,16 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 "====================================================| motion |====================================================
 Plugin 'easymotion/vim-easymotion'
-map <Leader>f <Plug>(easymotion-overwin-f2)
+map <space>f <Plug>(easymotion-overwin-f2)
 
 Plugin 'mattn/emmet-vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'groenewege/vim-less'
 Plugin 'Raimondi/delimitMate'
 let g:ycm_semantic_triggers = {
-    \   'css': [ 're!^\s{4}', 're!:\s+'],
-    \   'html': [ '</' ],
-    \ }
+			\   'css': [ 're!^\s{4}', 're!:\s+'],
+			\   'html': [ '</' ],
+			\ }
 Plugin 'pangloss/vim-javascript'
 let javascript_enable_domhtmlcss = 1
 Plugin 'nathanaelkane/vim-indent-guides'
