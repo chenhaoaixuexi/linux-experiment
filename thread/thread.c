@@ -33,10 +33,17 @@ int count = 100;
 pthread_t t1;
 pthread_t t2;
 
+void * show2(void * a)
+{
+	printf("i am show2\n");
+}
 // operator the public variable
 void * show(void * a){
 	while(count >0 ){
 		printf("%d : %d\n",(int)pthread_self(),count --);
+		pthread_t t;
+		pthread_create(&t,NULL,show2,NULL);
+		sleep(1);
 	}
 }
 

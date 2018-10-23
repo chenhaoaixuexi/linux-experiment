@@ -47,7 +47,6 @@ void * show(void * a){
 	}
 }
 
-
 int main(int argc, char *argv[])
 {
 	pthread_t t1;

@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  main.c
+ *       Filename:  position.c
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  10/20/18 18:13:15
+ *        Created:  10/22/18 22:04:16
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -16,12 +16,20 @@
  * =====================================================================================
  */
 #include <stdlib.h>
-#include <stdio.h>
-#include <curses.h>
-#include "draw.h"
 
-int main()
+struct POSITION_TANK_WALL
 {
-initscr();
-endwin();
-}
+	int x1;
+	int x2;
+	int y1;
+	int y2;
+};
+
+struct POSSITION_BULLET
+{
+	int x;
+	int y;
+};
+
+
+
