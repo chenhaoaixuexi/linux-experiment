@@ -32,19 +32,10 @@ int main(int ac, int av)
 	clear();
 	//begin
 	/** int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg); */
-	struct LINE line=
-	{
-		.y = COLS/8,
-		.x = LINES/8,
-		.speed = 1000
-	};
-	initinate_vline((void*)&line);
-	/** pthread_create(&t1,NULL,draw_line_v,NULL); */
+	pthread_create(&t1,NULL,draw_line_v,NULL);
 	/** [> int pthread_join(pthread_t thread, void **retval); <] */
-	/** sleep(20); */
-	/** pthread_join(t1,NULL); */
-	/** int clear(void); */
-	//end
+	pthread_join(t1,NULL);
+	while(1);
 	curs_set(1);
 	endwin();
 
